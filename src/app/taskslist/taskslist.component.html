@@ -1,0 +1,23 @@
+
+
+<div >
+  <ul id="list">
+    <!--need to add ngfor in ng-container-->
+    <ng-container *ngIf="isempty === false">
+      <ng-container  *ngFor="let task of taskList">
+
+        <div  class="task-container" >
+          <a class="task-color" target="{{task.color}}"></a>
+          <a class="task-title">{{task.title}}</a>
+          <p class="task-content"> {{task.content}}</p>
+          <span (click)="DeleteTask(task.id)" class="icon"><mat-icon>delete_outline</mat-icon></span>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="isempty === true">
+      <img src="../../assets/images/noting.jpg" alt="empty list">
+    </ng-container>
+
+  </ul>
+
+</div>

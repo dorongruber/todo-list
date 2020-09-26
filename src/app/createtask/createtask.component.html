@@ -1,0 +1,22 @@
+<div id="task-form" [style.display] = 'displayForm' >
+  <form class="form-container" #task='ngForm'>
+    <label for="title">Enter Title:</label><br>
+    <input id="title" class="inc" ngModel #titleInput="ngModel" name="title" type="text" required>
+    <mat-error *ngIf="titleInput.invalid && (titleInput.touched || isinvalid)" >title filed required!</mat-error><br>
+    <label for="content">Enter Content:</label><br>
+    <input id="content" class="inc" ngModel #contentInput="ngModel" name="content" type="text" required>
+    <mat-error *ngIf="contentInput.invalid && (contentInput.touched || isinvalid)">content filed required</mat-error><br>
+    <label for="color">Select Color : </label><br>
+    <div class="dropdown">
+      <input id="color" class="dropbtn inc" ngModel name="color" value="{{color}}" type="text">
+      <div (click)='checkEvent($event)' class="dropdown-content ">
+      <a href="#">RED</a>
+      <a href="#">GREEN</a>
+      <a href="#">YELLOW</a>
+      </div>
+    </div>
+  </form>
+  <mat-icon (click)='ChooseEvent($event,task)'>done_outline</mat-icon>
+  <mat-icon (click)='ChooseEvent($event,task)'>close</mat-icon>
+</div>
+

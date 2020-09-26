@@ -1,0 +1,17 @@
+<div class="layout">
+  <div class="color-container">
+    <app-calendar (clickeddate)="Selected($event)"></app-calendar>
+  </div>
+  <div class="form">
+    <app-createtask (addBtnstate)='CTState($event)' [formState]="addtask"></app-createtask>
+  </div>
+
+  <div class="gray-container">
+    <a id="new-task" class=" hide-mobil" (click)="ChangeFormState()"><mat-icon>add_circle</mat-icon></a>
+    <app-taskslist  [listdate]="datetoShow"></app-taskslist>
+
+  </div>
+</div>
+
+
+

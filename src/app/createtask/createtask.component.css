@@ -1,6 +1,5 @@
 #task-form {
   position: relative;
-  opacity: 0.7;
   padding: .7em 2.5vw;
   border-top: 1px solid #2e688c;
   border-bottom: 2px solid #2e688c;
@@ -24,7 +23,6 @@ label {
 mat-icon {
   margin: .3em;
   position: relative;
-  left: 43px;
   border-bottom: 3px solid black;
   cursor: pointer;
 }
@@ -80,19 +78,21 @@ mat-error {
   color: red;
 }
 
-@media only screen and (min-width: 500px) {
+.form-footer {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 450px) {
   #task-form {
-    width: 35vw;
-    margin-top: 0;
-    margin-left: 25vw;
-    margin-right: 2vw;
-    margin-bottom: 1vh;
+    width: 49vw;
+    margin: 0 21vw 3vh 21vw;
   }
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 451px) {
   #task-form {
-    width: 20vw;
+    width: auto;
     margin-left: 1vw;
     margin-top: 5vh;
     margin-right: 3vw;
@@ -100,6 +100,6 @@ mat-error {
   }
 
   .inc {
-    width: 20vw;
+    width: 41vw;
   }
 }

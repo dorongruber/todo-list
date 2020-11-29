@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, OnChanges, EventEmitter } from '@angular/core';
-import { TaskService } from '../task.service';
+import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'app-calendar',
@@ -18,14 +18,27 @@ export class CalendarComponent implements OnInit {
   cyear: number;
   cmonth: number;
   cday: number;
+  d = new Date().getDate();
+  m = new Date().getMonth();
+  y = new Date().getFullYear();
+  @Input() currentdate: {cd: number, cm: number, cy: number};
   @Output() clickeddate = new EventEmitter<boolean>();
   constructor(private taskservice: TaskService) { }
 
-  ngOnInit() {
-    const date = new Date();
-    this.cday = date.getDate();
-    this.cmonth = date.getMonth();
-    this.cyear = date.getFullYear();
+  async ngOnInit() {
+    await this.GetCurrentDate()
+    .then(res => {
+      /*
+      this.currentdate = {
+        cd: res.cd,
+        cm: res.cm,
+        cy: res.cy
+      };
+      */
+      this.cday = res.cd;
+      this.cmonth = res.cm;
+      this.cyear = res.cy;
+    });
     for (let i = 0; i < this.monthsList[this.cmonth - 1].nd ; i++) {
       this.days.push(i + 1);
     }
@@ -33,6 +46,7 @@ export class CalendarComponent implements OnInit {
     // to make changes on load in element style the DOM tree need to be ready
     // we need an event to tell when the DOM tree is ready
     document.addEventListener('DOMContentLoaded', () => {
+      // console.log('document.addEventListener(DOMContentLoaded');
       this.SelectedDay(this.cmonth , this.cday);
     });
   }
@@ -113,6 +127,16 @@ export class CalendarComponent implements OnInit {
   SetMonthInClaendar(year: number, month: number, c: number) {
     const firstDay = new Date(year, month + c, 1);
     this.NDinMonth(firstDay.getDay(), this.monthsList[month].nd, 0);
+  }
+
+  async GetCurrentDate() {
+    const date = new Date();
+    const tempdate = {
+      cd: date.getDate(),
+      cm: date.getMonth(),
+      cy: date.getFullYear()
+    };
+    return tempdate;
   }
 
 }

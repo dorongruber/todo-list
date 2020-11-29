@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Task } from '../task.model';
-import { TaskService } from '../task.service';
+import { Task } from '../model/task.model';
+import { TaskService } from '../services/task.service';
 @Component({
   selector: 'app-taskslist',
   templateUrl: './taskslist.component.html',
   styleUrls: ['./taskslist.component.css']
 })
 export class TaskslistComponent implements OnInit , OnChanges {
-  @Input()listdate: string;
+  @Input()listdate: boolean;
   isempty = false;
   taskList: Task[] = [];
   constructor(private taskservice: TaskService) { }
@@ -17,10 +17,13 @@ export class TaskslistComponent implements OnInit , OnChanges {
   }
 
   ngOnChanges() {
+    console.log('ngOnChanges');
     this.Redo();
   }
+
   SetList() {
     const date = this.taskservice.GetSelectedDate();
+    console.log('SetList -> ', date);
     this.taskservice.GetCurrentDayTasks(date)
     .subscribe(res => {
       const len = Object.values(res).length;
@@ -36,11 +39,14 @@ export class TaskslistComponent implements OnInit , OnChanges {
       this.IsEmpty(this.taskList);
     });
   }
+
   Redo() {
     this.taskList = [];
     this.SetList();
   }
+
   DeleteTask(id: number) {
+    console.log('DeleteTask -> ', id);
     this.taskservice.DeleteTask(id);
     this.taskList = this.taskList.filter(task => (task.id) !== id);
     this.IsEmpty(this.taskList);

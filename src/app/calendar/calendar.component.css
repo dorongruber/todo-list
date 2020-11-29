@@ -54,16 +54,15 @@ a{
   cursor: pointer;
 }
 
-@media only screen and (min-width: 500px) {
+@media only screen and (max-width: 450px) {
   .calender-container {
     width: 90vw;
     line-height: .5em;
   }
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 451px) {
   .calender-container {
-    width: 45vw;
     line-height: 1.2em;
   }
 }

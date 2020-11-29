@@ -1,13 +1,20 @@
 <div class="layout">
   <div class="color-container">
-    <app-calendar (clickeddate)="Selected($event)"></app-calendar>
+    <app-calendar  (clickeddate)="Selected($event)"></app-calendar>
   </div>
-  <div class="form">
-    <app-createtask (addBtnstate)='CTState($event)' [formState]="addtask"></app-createtask>
-  </div>
-
+  <ng-container *ngIf="addtask === true">
+    <div class="form">
+      <app-createtask id="new-task" (addBtnstate)='CTState($event)' [formState]="addtask"></app-createtask>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="addtask === false">
+    <div class="form add-btn">
+      <a id="new-task-btn" (click)="ChangeFormState()">
+        <mat-icon>add_circle</mat-icon></a>
+    </div>
+  </ng-container>
   <div class="gray-container">
-    <a id="new-task" class=" hide-mobil" (click)="ChangeFormState()"><mat-icon>add_circle</mat-icon></a>
+
     <app-taskslist  [listdate]="datetoShow"></app-taskslist>
 
   </div>

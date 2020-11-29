@@ -1,4 +1,4 @@
-<div id="task-form" [style.display] = 'displayForm' >
+<div id="task-form" >
   <form class="form-container" #task='ngForm'>
     <label for="title">Enter Title:</label><br>
     <input id="title" class="inc" ngModel #titleInput="ngModel" name="title" type="text" required>
@@ -10,13 +10,15 @@
     <div class="dropdown">
       <input id="color" class="dropbtn inc" ngModel name="color" value="{{color}}" type="text">
       <div (click)='checkEvent($event)' class="dropdown-content ">
-      <a href="#">RED</a>
-      <a href="#">GREEN</a>
-      <a href="#">YELLOW</a>
+      <a >RED</a>
+      <a >GREEN</a>
+      <a >YELLOW</a>
       </div>
     </div>
   </form>
-  <mat-icon (click)='ChooseEvent($event,task)'>done_outline</mat-icon>
-  <mat-icon (click)='ChooseEvent($event,task)'>close</mat-icon>
+  <div class="form-footer">
+    <mat-icon (click)='ChooseEvent($event,task)'>done_outline</mat-icon>
+    <mat-icon (click)='ChooseEvent($event,task)'>close</mat-icon>
+  </div>
 </div>
 

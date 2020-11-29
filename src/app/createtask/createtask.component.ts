@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges , Input, Output, EventEmitter} from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { TaskService } from '../task.service';
+import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'app-createtask',
@@ -10,7 +10,7 @@ import { TaskService } from '../task.service';
 export class CreatetaskComponent implements OnInit , OnChanges {
   @Input() formState: boolean;
   @Output() addBtnstate = new EventEmitter<boolean>();
-  displayForm = 'none';
+  displayForm: string;
   color = '';
   isinvalid = false;
   constructor(private taskservice: TaskService) { }
@@ -19,7 +19,8 @@ export class CreatetaskComponent implements OnInit , OnChanges {
     this.displayForm = 'none';
   }
   ngOnChanges() {
-    this.displayForm = 'block';
+    console.log('ngOnChanges ');
+    document.getElementById('task-form').style.visibility = 'block';
   }
 
   NewTask(task: NgForm) {
@@ -27,6 +28,7 @@ export class CreatetaskComponent implements OnInit , OnChanges {
       this.color = 'WHITE';
     }
     const nid = this.taskservice.GetSelectedDate();
+    console.log('new task -> ', nid);
     const newtask = {
       title: task.value.title,
       content: task.value.content,
@@ -34,10 +36,11 @@ export class CreatetaskComponent implements OnInit , OnChanges {
       color: this.color,
       id: Date.now()
     };
-    if ( this.taskservice.NewTask(newtask)) {
-      this.color = '';
-      // console.log('new task : ', newtask);
-    }
+    this.taskservice.NewTask(newtask).subscribe((res: {message: string, flag: boolean}) => {
+      if (res.flag) {
+        this.addBtnstate.emit(true);
+      }
+    });
   }
   //
   ChooseEvent(event: any, task: NgForm) {
@@ -49,13 +52,12 @@ export class CreatetaskComponent implements OnInit , OnChanges {
       }
       this.NewTask(task);
 
-      this.addBtnstate.emit(true);
     } else {
       // cancele option selected
       this.addBtnstate.emit(false);
       // console.log('cancele selected');
     }
-    this.displayForm = 'none';
+    document.getElementById('task-form').style.display = 'none';
     task.resetForm();
   }
 
